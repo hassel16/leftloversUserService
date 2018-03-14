@@ -24,7 +24,7 @@ public class ServiceRegistration {
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> entity = new HttpEntity<>(g.toJson(this.ownService, Service.class), headers);
         ResponseEntity<String> response = restTemplate.postForEntity("https://leftloversgateway.azurewebsites.net/APIGateway/ServiceRegister?password=leftlovers_wwi16B3",entity,String.class);
-        this.ownService = (g.fromJson(response.getBody(), Service.class));
+        //this.ownService = (g.fromJson(response.getBody(), Service.class));
     }
 
 }
