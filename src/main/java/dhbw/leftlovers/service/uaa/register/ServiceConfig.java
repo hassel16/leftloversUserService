@@ -1,4 +1,5 @@
-package com.tokensafeservice.tokensafeservice;
+package dhbw.leftlovers.service.uaa.register;
+
 
 import org.springframework.boot.context.embedded.EmbeddedServletContainerInitializedEvent;
 import org.springframework.context.ApplicationListener;

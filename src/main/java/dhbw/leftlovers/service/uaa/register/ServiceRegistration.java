@@ -1,4 +1,4 @@
-package com.tokensafeservice.tokensafeservice;
+package dhbw.leftlovers.service.uaa.register;
 
 
 import org.springframework.http.*;
@@ -22,8 +22,8 @@ public class ServiceRegistration {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<String> entity = new HttpEntity<String>(g.toJson(this.ownService, Service.class), headers);
-        ResponseEntity<String> response  = restTemplate.exchange("https://leftloversgateway.azurewebsites.net/APIGateway/ServiceRegister", HttpMethod.POST,entity,String.class);
+        HttpEntity<String> entity = new HttpEntity<>(g.toJson(this.ownService, Service.class), headers);
+        ResponseEntity<String> response = restTemplate.postForEntity("https://leftloversgateway.azurewebsites.net/APIGateway/ServiceRegister?password=leftlovers_wwi16B3",entity,String.class);
         this.ownService = (g.fromJson(response.getBody(), Service.class));
     }
 

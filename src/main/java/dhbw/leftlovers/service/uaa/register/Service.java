@@ -1,4 +1,4 @@
-package com.tokensafeservice.tokensafeservice;
+package dhbw.leftlovers.service.uaa.register;
 
 
 public class Service {
@@ -6,9 +6,9 @@ public class Service {
     public int servicePort;
     public int serviceId;
 
-    Service(String serviceName, String serviceAddress, int servicePort) {
+    Service(String serviceName, String serviceUrl, int servicePort) {
         this.serviceName = serviceName;
-        this.serviceAddress = serviceAddress;
+        this.serviceUrl = serviceUrl;
         this.servicePort = servicePort;
     }
 }
