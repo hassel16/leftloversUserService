@@ -5,13 +5,11 @@ import org.springframework.boot.context.embedded.EmbeddedServletContainerInitial
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Configuration;
 
-import java.net.InetAddress;
-
 @Configuration
-public class ServiceConfig implements ApplicationListener<EmbeddedServletContainerInitializedEvent>{
+public class ServiceConfig implements ApplicationListener<EmbeddedServletContainerInitializedEvent> {
 
-    private String serviceName= "UAAService", serviceAddress = "https://uaaservice.herokuapp.com/";
-    private int servicePort=443;
+    private String serviceName = "UAAService", serviceAddress = "https://uaaservice.herokuapp.com/";
+    private int servicePort = 443;
 
     public String getServiceName() {
         return serviceName;
@@ -27,7 +25,7 @@ public class ServiceConfig implements ApplicationListener<EmbeddedServletContain
 
     @Override
     public void onApplicationEvent(EmbeddedServletContainerInitializedEvent event) {
-        ServiceRegistration serviceRegistration = new ServiceRegistration(this.serviceName,this.serviceAddress,this.servicePort);
+        ServiceRegistration serviceRegistration = new ServiceRegistration(this.serviceName, this.serviceAddress, this.servicePort);
 
     }
 }
