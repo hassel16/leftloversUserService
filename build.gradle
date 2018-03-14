@@ -18,6 +18,9 @@ group = 'dhbw.leftlovers.service'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
 
+task stage(dependsOn: ['build', 'clean'])
+build.mustRunAfter clean
+
 task wrapper(type: Wrapper) {
    gradleVersion = '4.6' //version required
 }
