@@ -3,22 +3,29 @@ package dhbw.leftlovers.service.uaa.entity;
 import lombok.Data;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import java.util.Objects;
 
 @Data
 @Entity
-@Table(name = "user")
+@Table(name = "tbl_user", schema = "leftlovers", catalog = "")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @Column(name = "userId", nullable = false)
+    private long userId;
 
-    @NotNull(message = "The username must be entered.")
+    @Basic
+    @Column(name = "username", nullable = false, length = 50)
     private String username;
 
-    @NotNull(message = "The password must be entered.")
+    @Basic
+    @Column(name = "password", nullable = false, length = 50)
     private String password;
-}
 
-// TODO: Stadt Email
+    @Basic
+    @Column(name = "email", nullable = false, length = 200)
+    private String email;
+
+    // TODO: City + Country?
+}

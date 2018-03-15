@@ -37,7 +37,7 @@ public class UserController {
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")
-                .buildAndExpand(response.getId()).toUri();
+                .buildAndExpand(response.getUserId()).toUri();
 
         return ResponseEntity.created(location).build();
     }
@@ -49,7 +49,5 @@ public class UserController {
         });
     }
 
-    // TODO: RequestBodies validieren (NotNull etc.)
     // TODO: Auto-Login
-    // TODO: Login-Route auf Service umleiten
 }
