@@ -4,7 +4,7 @@
 
   curl -i -H "Content-Type: application/json" -X POST -d '{
       "username": "admin",
-      "password": "password"
+      "password": "password",
       "email": "admin@example.com"
   }' http://localhost:8080/UAAService/signup
 
@@ -13,7 +13,6 @@
   curl -i -H "Content-Type: application/json" -X POST -d '{
       "username": "admin",
       "password": "password"
-      "email": "admin@example.com
   }' http://localhost:8080/login
   
 You will receive a JWT as output.

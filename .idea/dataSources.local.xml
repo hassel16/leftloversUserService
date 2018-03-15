@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="@nrffbltw99v3vk0j.myfritz.net" uuid="11607477-64eb-46e0-98ef-241b2f953799">
+      <database-info product="MySQL" version="5.5.56-MariaDB" jdbc-version="4.2" driver-name="MariaDB connector/J" driver-version="2.2.1">
+        <extra-name-characters>#@</extra-name-characters>
+        <identifier-quote-string>`</identifier-quote-string>
+      </database-info>
+      <case-sensitivity plain-identifiers="exact" quoted-identifiers="exact" />
+      <secret-storage>master_key</secret-storage>
+      <user-name>ll_db</user-name>
+      <introspection-schemas>*:leftlovers</introspection-schemas>
+    </data-source>
+  </component>
+</project>

@@ -3,12 +3,13 @@ package dhbw.leftlovers.service.uaa.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Data
 @Entity
 @Table(name = "tbl_user", schema = "leftlovers", catalog = "")
-public class User {
+public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
