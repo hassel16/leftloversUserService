@@ -31,7 +31,7 @@ public class UserController {
 
     @GetMapping("/wakeup")
     @ResponseBody
-    ResponseEntity<String> wakeUp(){
+    String wakeUp(){
         return new String("I'm already up!");
     }
 
