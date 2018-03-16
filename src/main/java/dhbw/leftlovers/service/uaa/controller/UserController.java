@@ -28,9 +28,10 @@ public class UserController {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
+
     @GetMapping("/wakeup")
-    String wakeUp(){
-        return "I'm already up!";
+    ResponseEntity<String> wakeUp(){
+        return ResponseEntity.ok("I'm already up!");
     }
 
     @PostMapping("/token")
