@@ -30,9 +30,8 @@ public class UserController {
 
 
     @GetMapping("/wakeup")
-    @ResponseBody
-    String wakeUp(){
-        return new String("I'm already up!");
+    @ResponseBody String wakeUp(){
+        return "I'm already up!";
     }
 
     @PostMapping("/token")
