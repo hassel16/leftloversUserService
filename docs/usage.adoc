@@ -16,3 +16,13 @@
   }' http://localhost:8080/login
   
 You will receive a JWT as output.
+
+==== How to verify the token
+
+    curl -i -H "Authorization: Bearer xxx.yyy.zzz" -X POST
+    http://localhost:8080/UAAService/token
+
+==== How to wake up the service
+
+    curl -i -X GET localhost:8080/UAAService/wakeup
+

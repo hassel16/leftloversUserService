@@ -7,13 +7,11 @@ import dhbw.leftlovers.service.uaa.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.security.Principal;
 
 @RestController
 @RequestMapping("/UAAService")
@@ -30,6 +28,16 @@ public class UserController {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
+    @GetMapping("/wakeup")
+    String wakeUp(){
+        return "I'm already up!";
+    }
+
+    @PostMapping("/token")
+    ResponseEntity<?> user(Principal principal) {
+        return ResponseEntity.ok(principal);
+    }
+
     @PostMapping("/signup")
     ResponseEntity<?> signUp(@RequestBody User user) {
         this.checkIfUsernameIsPresent(user.getUsername());
@@ -44,7 +52,6 @@ public class UserController {
         return ResponseEntity.created(location).build();
     }
 
-
     private void checkIfUsernameIsPresent(String username) {
         this.userService.findByUsername(username).ifPresent(user -> {
             throw new UsernameTakenException(username);
@@ -58,4 +65,6 @@ public class UserController {
     }
 
     // TODO: Auto-Login
+    // TODO: Token-Methode - Sicherheit / bessere Alternative
+
 }
