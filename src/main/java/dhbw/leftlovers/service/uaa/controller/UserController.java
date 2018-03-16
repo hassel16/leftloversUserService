@@ -29,7 +29,7 @@ public class UserController {
     }
 
 
-    @GetMapping(path = "/wakeup", produces =MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/wakeup", produces ="application/json")
     @ResponseBody String wakeUp(){
         return "I'm already up!";
     }
