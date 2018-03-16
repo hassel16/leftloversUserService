@@ -1,6 +1,7 @@
 package dhbw.leftlovers.service.uaa.controller;
 
 import dhbw.leftlovers.service.uaa.entity.User;
+import dhbw.leftlovers.service.uaa.exception.EmailTakenException;
 import dhbw.leftlovers.service.uaa.exception.UsernameTakenException;
 import dhbw.leftlovers.service.uaa.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,20 +33,27 @@ public class UserController {
     @PostMapping("/signup")
     ResponseEntity<?> signUp(@RequestBody User user) {
         this.checkIfUsernameIsPresent(user.getUsername());
+        this.checkIfEmailIsPresent(user.getEmail());
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         User response = userService.save(user);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")
-                .buildAndExpand(response.getUserId()).toUri();
+                .buildAndExpand(response.getUserid()).toUri();
 
         return ResponseEntity.created(location).build();
     }
 
 
-    private void checkIfUsernameIsPresent(String userId) {
-        this.userService.findByUsername(userId).ifPresent(user -> {
-            throw new UsernameTakenException(userId);
+    private void checkIfUsernameIsPresent(String username) {
+        this.userService.findByUsername(username).ifPresent(user -> {
+            throw new UsernameTakenException(username);
+        });
+    }
+
+    private void checkIfEmailIsPresent(String email) {
+        this.userService.findByEmail(email).ifPresent(user -> {
+            throw new EmailTakenException(email);
         });
     }
 
