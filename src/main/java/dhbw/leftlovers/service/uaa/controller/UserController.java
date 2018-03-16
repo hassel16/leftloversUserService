@@ -32,7 +32,7 @@ public class UserController {
     @GetMapping("/wakeup")
     @ResponseBody
     ResponseEntity<String> wakeUp(){
-        return ResponseEntity.ok("I'm already up!");
+        return new String("I'm already up!");
     }
 
     @PostMapping("/token")
