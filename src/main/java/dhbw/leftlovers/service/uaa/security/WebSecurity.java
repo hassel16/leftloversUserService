@@ -60,7 +60,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         config.setAllowedOrigins(Arrays.asList("*"));
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(Arrays.asList("authorization", "content-type", "x-auth-token"));
-        config.setExposedHeaders(Arrays.asList("x-auth-token"));
+        config.setExposedHeaders(Arrays.asList("content-type"));
 //        config.applyPermitDefaultValues();
         source.registerCorsConfiguration("/**", config);
         return source;
