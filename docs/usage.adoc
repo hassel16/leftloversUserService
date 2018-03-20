@@ -3,17 +3,17 @@
 ==== Sign up
 
   curl -i -H "Content-Type: application/json" -X POST -d '{
-      "username": "admin",
+      "username": "admin4",
       "password": "password",
-      "email": "admin@example.com"
+      "email": "admin4@example.com"
   }' http://localhost:8080/UAAService/signup
 
 ==== Log in
 
   curl -i -H "Content-Type: application/json" -X POST -d '{
-      "username": "admin",
+      "username": "admin4",
       "password": "password"
-  }' http://localhost:8080/login
+  }' http://localhost:8080/UAAService/login
   
 You will receive a JWT as output.
 
@@ -22,7 +22,10 @@ You will receive a JWT as output.
     curl -i -H "Authorization: Bearer xxx.yyy.zzz" -X POST
     http://localhost:8080/UAAService/token
 
-==== How to wake up the service
+==== How to wake up this service
 
     curl -i -X GET localhost:8080/UAAService/wakeup
 
+
+
+Access-Control-Allow-Headers: Content-Type

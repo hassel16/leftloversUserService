@@ -12,6 +12,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+
+import java.util.Arrays;
 
 import static dhbw.leftlovers.service.uaa.security.SecurityConstants.*;
 
@@ -30,7 +33,11 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable().authorizeRequests()
+        http
+                .cors()
+                .and()
+                .csrf().disable()
+                .authorizeRequests()
                 .antMatchers(SIGN_UP_URL, WAKE_UP_URL).permitAll()
                 .anyRequest().authenticated()
                 .and()
@@ -47,8 +54,14 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
-        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true);
+        config.setAllowedMethods(Arrays.asList("GET", "POST"));
+        config.addAllowedHeader("*");
+        config.addAllowedMethod("*");
+        config.applyPermitDefaultValues();
+        source.registerCorsConfiguration("/**", config);
         return source;
     }
 

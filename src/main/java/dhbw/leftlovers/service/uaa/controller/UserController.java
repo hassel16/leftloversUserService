@@ -66,5 +66,5 @@ public class UserController {
 
     // TODO: Auto-Login
     // TODO: Token-Methode - Sicherheit / bessere Alternative
-
+    // TODO: wie funktioniert Principal?
 }
