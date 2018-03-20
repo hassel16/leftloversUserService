@@ -13,6 +13,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.security.Principal;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/UAAService")
 public class UserController {
@@ -39,7 +40,6 @@ public class UserController {
         return ResponseEntity.ok(principal);
     }
 
-    @CrossOrigin
     @PostMapping("/signup")
     ResponseEntity<?> signUp(@RequestBody User user) {
         this.checkIfUsernameIsPresent(user.getUsername());
