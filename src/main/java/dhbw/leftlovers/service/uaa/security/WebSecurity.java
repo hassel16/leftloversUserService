@@ -52,7 +52,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
     }
 
-    @Bean
+/*    @Bean
     CorsConfigurationSource corsConfigurationSource() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
@@ -63,7 +63,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         config.applyPermitDefaultValues();
         source.registerCorsConfiguration("/**", config);
         return source;
-    }
+    }*/
 
     @Bean
     public JWTAuthenticationFilter getJWTAuthenticationFilter() throws Exception {

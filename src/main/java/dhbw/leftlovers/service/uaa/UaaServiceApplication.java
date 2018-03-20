@@ -20,13 +20,14 @@ public class UaaServiceApplication {
         return new BCryptPasswordEncoder();
     }
 
+/*
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurerAdapter() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry
-                        .addMapping("/**")
+                        .addMapping("/UAAService/signup")
                         .allowedOrigins("*")
                         .allowedMethods("GET", "POST", "OPTIONS", "PUT")
                         .allowedHeaders("Content-Type", "X-Requested-With", "accept", "Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers")
@@ -35,4 +36,16 @@ public class UaaServiceApplication {
             }
         };
     }
+*/
+
+/*
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurerAdapter() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**").allowedOrigins("*");
+            }
+        };
+    }*/
 }

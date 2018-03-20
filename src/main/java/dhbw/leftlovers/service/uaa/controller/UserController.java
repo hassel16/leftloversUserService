@@ -39,6 +39,7 @@ public class UserController {
         return ResponseEntity.ok(principal);
     }
 
+    @CrossOrigin
     @PostMapping("/signup")
     ResponseEntity<?> signUp(@RequestBody User user) {
         this.checkIfUsernameIsPresent(user.getUsername());
