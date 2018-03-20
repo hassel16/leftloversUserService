@@ -52,18 +52,19 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
     }
 
-/*    @Bean
+    @Bean
     CorsConfigurationSource corsConfigurationSource() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(true);
-        config.setAllowedMethods(Arrays.asList("GET", "POST"));
-        config.addAllowedHeader("*");
-        config.addAllowedMethod("*");
-        config.applyPermitDefaultValues();
+//        config.setAllowCredentials(true);
+        config.setAllowedOrigins(Arrays.asList("*"));
+        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
+        config.setAllowedHeaders(Arrays.asList("authorization", "content-type", "x-auth-token"));
+        config.setExposedHeaders(Arrays.asList("x-auth-token"));
+//        config.applyPermitDefaultValues();
         source.registerCorsConfiguration("/**", config);
         return source;
-    }*/
+    }
 
     @Bean
     public JWTAuthenticationFilter getJWTAuthenticationFilter() throws Exception {
