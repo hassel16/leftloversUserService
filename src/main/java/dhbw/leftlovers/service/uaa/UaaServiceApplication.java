@@ -20,7 +20,7 @@ public class UaaServiceApplication {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
+    /*@Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurerAdapter() {
             @Override
@@ -30,5 +30,5 @@ public class UaaServiceApplication {
                         .allowedHeaders("Origin", "X-Requested-With", "Content-Type", "Accept");
             }
         };
-    }
+    }*/
 }
