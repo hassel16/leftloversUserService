@@ -28,9 +28,10 @@ public class UserController {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    @GetMapping("/wakeup")
-    String wakeUp(){
-        return "I'm already up!";
+
+    @GetMapping(path = "/wakeup", produces ="application/json")
+    @ResponseBody String wakeUp(){
+        return "\"I'm already up!\"";
     }
 
     @PostMapping("/token")
