@@ -19,16 +19,4 @@ public class UaaServiceApplication {
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-    /*@Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurerAdapter() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")
-                        .allowedMethods("HEAD","OPTIONS")
-                        .allowedHeaders("Origin", "X-Requested-With", "Content-Type", "Accept");
-            }
-        };
-    }*/
 }
