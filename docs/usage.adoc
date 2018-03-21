@@ -3,29 +3,34 @@
 ==== Sign up
 
   curl -i -H "Content-Type: application/json" -X POST -d '{
-      "username": "admin4",
+      "username": "max",
       "password": "password",
-      "email": "admin4@example.com"
+      "email": "max@example.com"
   }' http://localhost:8080/UAAService/signup
+
+You will receive a JWT as output.
 
 ==== Log in
 
   curl -i -H "Content-Type: application/json" -X POST -d '{
-      "username": "admin4",
+      "username": "max",
       "password": "password"
   }' http://localhost:8080/UAAService/login
   
 You will receive a JWT as output.
 
-==== How to verify the token
+==== How to validate JWT
 
-    curl -i -H "Authorization: Bearer xxx.yyy.zzz" -X POST
-    http://localhost:8080/UAAService/token
+    curl -i -H "Authorization: Bearer xxx.yyy.zzz" -X GET http://localhost:8080/UAAService/validate
+
+=== How to get user information from JWT
+
+    curl -i -H "Authorization: Bearer xxx.yyy.zzz" -X GET http://localhost:8080/UAAService/me
+
+=== How to delete a user
+
+    curl -i -H "Authorization: Bearer xxx.yyy.zzz" -X DELETE localhost:8080/UAAService/{username}
 
 ==== How to wake up this service
 
     curl -i -X GET localhost:8080/UAAService/wakeup
-
-
-
-Access-Control-Allow-Headers: Content-Type
