@@ -1,18 +1,14 @@
 package dhbw.leftlovers.service.uaa.controller;
 
 import dhbw.leftlovers.service.uaa.entity.User;
-import dhbw.leftlovers.service.uaa.exception.EmailTakenException;
-import dhbw.leftlovers.service.uaa.exception.UsernameTakenException;
+import dhbw.leftlovers.service.uaa.entity.UserResponse;
 import dhbw.leftlovers.service.uaa.service.UserService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
+import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 
 @CrossOrigin
@@ -22,6 +18,7 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+/*
 
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -30,39 +27,78 @@ public class UserController {
         this.userService = userService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
+*/
 
-    // actuator-lib
+    @Autowired
+    private ModelMapper modelMapper;
 
-    @GetMapping(path = "/wakeup", produces ="application/json")
-    @ResponseBody String wakeUp(){
+    // TODO: Spring Boot Actuator einbinden
+
+    @GetMapping(path = "/wakeup", produces = "application/json")
+    @ResponseBody
+    String wakeUp() {
         return "\"I'm already up!\"";
     }
 
-    @PostMapping("/token")
-    ResponseEntity<?> user(Principal principal) {
-        return ResponseEntity.ok(principal);
+    @GetMapping("/validate")
+    public boolean validateToken(HttpServletRequest req) {
+        return userService.validateToken(req);
     }
 
-    @PostMapping("/signup")
+ /*   @PostMapping("/signup")
     ResponseEntity<?> signUp(@RequestBody User user) {
         this.checkIfUsernameIsPresent(user.getUsername());
         this.checkIfEmailIsPresent(user.getEmail());
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         User response = userService.save(user);
-/*
-
-        Authentication a = authenticationProvider.authenticate(null);
-        ((Authentication) a).getPrincipal();
-*/
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")
                 .buildAndExpand(response.getUserid()).toUri();
 
+
         return ResponseEntity.created(location).build();
+    }*/
+
+    @PostMapping("/signup")
+    public String signup(@RequestBody User user) {
+        return userService.signup(user);
     }
 
-    private void checkIfUsernameIsPresent(String username) {
+    @PostMapping("/login")
+    public String login(@RequestBody User user) {
+        return userService.login(user.getUsername(), user.getPassword());
+    }
+
+    @DeleteMapping("/{username}")
+    public String delete(@PathVariable String username) {
+        userService.delete(username);
+        return username;
+
+        // TODO: Rückgabewert ändern.
+    }
+
+    @GetMapping("/me")
+    public UserResponse whoami(HttpServletRequest req) {
+        return modelMapper.map(userService.whoami(req), UserResponse.class);
+    }
+
+/*    @PostMapping("/signup")
+    HttpHeaders signUp(@RequestBody User user) {
+        this.checkIfUsernameIsPresent(user.getUsername());
+        this.checkIfEmailIsPresent(user.getEmail());
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        User response = userService.save(user);
+
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest().path("/{id}")
+                .buildAndExpand(response.getUserid()).toUri();
+
+        return userService.doLogin(user);
+//        return ResponseEntity.created(location).build();
+    }*/
+
+/*    private void checkIfUsernameIsPresent(String username) {
         this.userService.findByUsername(username).ifPresent(user -> {
             throw new UsernameTakenException(username);
         });
@@ -72,7 +108,7 @@ public class UserController {
         this.userService.findByEmail(email).ifPresent(user -> {
             throw new EmailTakenException(email);
         });
-    }
+    }*/
 
     // TODO: Auto-Login
     // TODO: Token-Methode - Sicherheit / bessere Alternative
