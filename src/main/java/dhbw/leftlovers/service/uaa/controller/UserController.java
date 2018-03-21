@@ -35,8 +35,7 @@ public class UserController {
     // TODO: Spring Boot Actuator einbinden
 
     @GetMapping(path = "/wakeup", produces = "application/json")
-    @ResponseBody
-    String wakeUp() {
+    @ResponseBody String wakeUp() {
         return "\"I'm already up!\"";
     }
 
