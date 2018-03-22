@@ -31,6 +31,6 @@ You will receive a JWT as output.
 
     curl -i -H "Authorization: Bearer xxx.yyy.zzz" -X DELETE localhost:8080/UAAService/{username}
 
-==== How to wake up this service
+==== How to check health status
 
-    curl -i -X GET localhost:8080/UAAService/wakeup
+    curl -i -X GET localhost:8080/UAAService/health
