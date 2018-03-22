@@ -19,19 +19,24 @@ import static dhbw.leftlovers.service.uaa.security.SecurityConstants.*;
 @EnableWebSecurity
 public class WebSecurity extends WebSecurityConfigurerAdapter {
 
-    /* private UserDetailsService userDetailsService;
-     private BCryptPasswordEncoder bCryptPasswordEncoder;
- */
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
 
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.cors().and().csrf().disable().authorizeRequests();
 
-/*
-    public WebSecurity(UserDetailsService userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.userDetailsService = userDetailsService;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        http.authorizeRequests()
+                .antMatchers(SIGN_UP_URL).permitAll()
+                .antMatchers(LOG_IN_URL).permitAll()
+                .antMatchers(WAKE_UP_URL).permitAll()
+                .anyRequest().authenticated();
+
+        http.apply(new JwtTokenFilterConfigurer(jwtTokenProvider));
+
+        // this disables session creation on Spring Security
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
-*/
 
     @Override
     public void configure(org.springframework.security.config.annotation.web.builders.WebSecurity web) throws Exception {
@@ -40,45 +45,9 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers("/swagger-ui.html")//
                 .antMatchers("/configuration/**")//
                 .antMatchers("/webjars/**")//
-                .antMatchers("/public");
+                .antMatchers("/public")
+                .antMatchers("/health");
     }
-
-    /*
-        @Override
-        protected void configure(HttpSecurity http) throws Exception {
-            http.cors().and().csrf().disable().authorizeRequests()
-                    .antMatchers(SIGN_UP_URL, WAKE_UP_URL).permitAll()
-                    .anyRequest().authenticated()
-                    .and()
-                    .addFilter(getJWTAuthenticationFilter())
-                    .addFilter(new JWTAuthorizationFilter(authenticationManager()))
-                    // this disables session creation on Spring Security
-                    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        }
-    */
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable().authorizeRequests();
-
-        http.authorizeRequests().antMatchers(SIGN_UP_URL).permitAll()
-                .antMatchers(LOG_IN_URL).permitAll()
-                .antMatchers(WAKE_UP_URL).permitAll()
-                .anyRequest().authenticated();
-
-
-        http.apply(new JwtTokenFilterConfigurer(jwtTokenProvider));
-
-        // this disables session creation on Spring Security
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-    }
-
-/*
-
-    @Override
-    public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
-    }
-*/
 
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
@@ -91,12 +60,4 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
-/*
-    @Bean
-    public JWTAuthenticationFilter getJWTAuthenticationFilter() throws Exception {
-        final JWTAuthenticationFilter filter = new JWTAuthenticationFilter(authenticationManager());
-//        filter.setFilterProcessesUrl("/UAAService/login");
-        filter.setFilterProcessesUrl("/UAAService2/login");
-        return filter;
-    }*/
 }

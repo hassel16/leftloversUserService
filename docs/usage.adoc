@@ -3,9 +3,9 @@
 ==== Sign up
 
   curl -i -H "Content-Type: application/json" -X POST -d '{
-      "username": "max",
+      "username": "max77",
       "password": "password",
-      "email": "max@example.com"
+      "email": "max77@example.com"
   }' http://localhost:8080/UAAService/signup
 
 You will receive a JWT as output.

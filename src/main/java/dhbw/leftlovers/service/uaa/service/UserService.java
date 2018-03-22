@@ -13,8 +13,6 @@ public interface UserService {
 
     User save(User user);
 
-//    HttpHeaders doLogin(User user);
-
     String login(String username, String password);
 
     String signup(User user);
@@ -24,4 +22,6 @@ public interface UserService {
     User whoami(HttpServletRequest req);
 
     boolean validateToken(HttpServletRequest req);
+
+    String getIdFromJWT(String token);
 }

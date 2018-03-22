@@ -1,5 +1,6 @@
 package dhbw.leftlovers.service.uaa.controller;
 
+import dhbw.leftlovers.service.uaa.entity.TokenResponse;
 import dhbw.leftlovers.service.uaa.entity.User;
 import dhbw.leftlovers.service.uaa.entity.UserResponse;
 import dhbw.leftlovers.service.uaa.service.UserService;
@@ -9,107 +10,70 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.security.Principal;
+
+import static dhbw.leftlovers.service.uaa.security.SecurityConstants.*;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/UAAService")
 public class UserController {
 
     @Autowired
     private UserService userService;
-/*
-
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    public UserController(UserService userService,
-                          BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.userService = userService;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-    }
-*/
 
     @Autowired
     private ModelMapper modelMapper;
 
-    // TODO: Spring Boot Actuator einbinden
+    // JWT in body
 
-    @GetMapping(path = "/wakeup", produces = "application/json")
-    @ResponseBody String wakeUp() {
-        return "\"I'm already up!\"";
+    @PostMapping("/signup")
+    TokenResponse signup(@RequestBody User user) {
+        return new TokenResponse(userService.signup(user));
+    }
+
+    /*
+
+    // JWT in header
+
+    @PostMapping("/signup")
+    ResponseEntity<?> signup(@RequestBody User user) {
+        String bearerToken = userService.signup(user);
+        return ResponseEntity.ok().header(HEADER_STRING, TOKEN_PREFIX + bearerToken).build();
+    }
+
+    */
+
+    // JWT in body
+
+    @PostMapping("/login")
+    TokenResponse login(@RequestBody User user) {
+        return new TokenResponse(userService.login(user.getUsername(), user.getPassword()));
+    }
+
+    /*
+
+    // JWT in header
+
+    @PostMapping("/login")
+    ResponseEntity<?> login(@RequestBody User user) {
+        String bearerToken = userService.login(user.getUsername(), user.getPassword());
+        return ResponseEntity.ok().header(HEADER_STRING, TOKEN_PREFIX + bearerToken).build();
+    }
+
+    */
+
+    @DeleteMapping("/{username}")
+    ResponseEntity<?> delete(@PathVariable String username) {
+        userService.delete(username);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/validate")
-    public boolean validateToken(HttpServletRequest req) {
+    boolean validateToken(HttpServletRequest req) {
         return userService.validateToken(req);
     }
 
- /*   @PostMapping("/signup")
-    ResponseEntity<?> signUp(@RequestBody User user) {
-        this.checkIfUsernameIsPresent(user.getUsername());
-        this.checkIfEmailIsPresent(user.getEmail());
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        User response = userService.save(user);
-
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest().path("/{id}")
-                .buildAndExpand(response.getUserid()).toUri();
-
-
-        return ResponseEntity.created(location).build();
-    }*/
-
-    @PostMapping("/signup")
-    public String signup(@RequestBody User user) {
-        return userService.signup(user);
-    }
-
-    @PostMapping("/login")
-    public String login(@RequestBody User user) {
-        return userService.login(user.getUsername(), user.getPassword());
-    }
-
-    @DeleteMapping("/{username}")
-    public String delete(@PathVariable String username) {
-        userService.delete(username);
-        return username;
-
-        // TODO: Rückgabewert ändern.
-    }
-
     @GetMapping("/me")
-    public UserResponse whoami(HttpServletRequest req) {
+    UserResponse whoami(HttpServletRequest req) {
         return modelMapper.map(userService.whoami(req), UserResponse.class);
     }
-
-/*    @PostMapping("/signup")
-    HttpHeaders signUp(@RequestBody User user) {
-        this.checkIfUsernameIsPresent(user.getUsername());
-        this.checkIfEmailIsPresent(user.getEmail());
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        User response = userService.save(user);
-
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest().path("/{id}")
-                .buildAndExpand(response.getUserid()).toUri();
-
-        return userService.doLogin(user);
-//        return ResponseEntity.created(location).build();
-    }*/
-
-/*    private void checkIfUsernameIsPresent(String username) {
-        this.userService.findByUsername(username).ifPresent(user -> {
-            throw new UsernameTakenException(username);
-        });
-    }
-
-    private void checkIfEmailIsPresent(String email) {
-        this.userService.findByEmail(email).ifPresent(user -> {
-            throw new EmailTakenException(email);
-        });
-    }*/
-
-    // TODO: Auto-Login
-    // TODO: Token-Methode - Sicherheit / bessere Alternative
-    // TODO: wie funktioniert Principal?
 }

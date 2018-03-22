@@ -48,6 +48,15 @@ public class JwtTokenProvider {
                 .getSubject();
     }
 
+
+    public String getId(String token) {
+        return Jwts.parser()
+                .setSigningKey(SECRET.getBytes())
+                .parseClaimsJws(token)
+                .getBody()
+                .getId();
+    }
+
     public String resolveToken(HttpServletRequest req) {
         String bearerToken = req.getHeader("Authorization");
         if (bearerToken != null && bearerToken.startsWith("Bearer ")) {

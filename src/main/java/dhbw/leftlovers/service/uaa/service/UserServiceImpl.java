@@ -32,8 +32,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-//    private static final String LOGIN_URL = "https://leftloversgateway.azurewebsites.net/UAAService/login";
-
     @Override
     public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
@@ -83,16 +81,10 @@ public class UserServiceImpl implements UserService {
         return jwtTokenProvider.validateToken(req);
     }
 
-
-
-   /* public HttpHeaders doLogin(User user) {
-        RestTemplate restTemplate = new RestTemplate();
-        URI uri = URI.create(LOGIN_URL);
-//        RequestEntity<?> request = RequestEntity.get(uri).accept(MediaType.APPLICATION_JSON).build();
-        HttpEntity<User> request = new HttpEntity<>(user);
-        ResponseEntity<User> response = restTemplate.exchange(uri, HttpMethod.POST, request, User.class);
-        return response.getHeaders();
-    }*/
+    @Override
+    public String getIdFromJWT(String token) {
+        return jwtTokenProvider.getId(token);
+    }
 
     private void checkIfUsernameIsPresent(String username) {
         this.findByUsername(username).ifPresent(user -> {
