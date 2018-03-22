@@ -1,16 +1,16 @@
 == How to use this service
 
-==== Sign up
+==== How do I sign up?
 
   curl -i -H "Content-Type: application/json" -X POST -d '{
-      "username": "max77",
+      "username": "max78",
       "password": "password",
-      "email": "max77@example.com"
+      "email": "max78@example.com"
   }' http://localhost:8080/UAAService/signup
 
 You will receive a JWT as output.
 
-==== Log in
+==== How do I log in?
 
   curl -i -H "Content-Type: application/json" -X POST -d '{
       "username": "max",
@@ -19,18 +19,22 @@ You will receive a JWT as output.
   
 You will receive a JWT as output.
 
-==== How to validate JWT
+==== How do I validate the JWT?
 
     curl -i -H "Authorization: Bearer xxx.yyy.zzz" -X GET http://localhost:8080/UAAService/validate
 
-==== How to get user information from JWT
+==== How do I get user information from the JWT?
 
-    curl -i -H "Authorization: Bearer xxx.yyy.zzz" -X GET http://localhost:8080/UAAService/me
+    curl -i -H "Authorization: Bearer xxx.yyy.zzz" -X GET http://localhost:8080/UAAService/resolve
 
-==== How to delete a user
+==== How do I delete a user?
 
     curl -i -H "Authorization: Bearer xxx.yyy.zzz" -X DELETE localhost:8080/UAAService/{username}
 
-==== How to check health status
+==== How do I check the health status?
 
-    curl -i -X GET localhost:8080/UAAService/health
+    localhost:8080/UAAService/health
+
+==== How do I get access to the api documentation?
+
+    localhost:8080/UAAService/swagger-ui.html

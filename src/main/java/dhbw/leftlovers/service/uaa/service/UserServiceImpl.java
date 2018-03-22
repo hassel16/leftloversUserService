@@ -6,7 +6,7 @@ import dhbw.leftlovers.service.uaa.exception.JWTValidationException;
 import dhbw.leftlovers.service.uaa.exception.LoginException;
 import dhbw.leftlovers.service.uaa.exception.UsernameTakenException;
 import dhbw.leftlovers.service.uaa.repository.UserRepository;
-import dhbw.leftlovers.service.uaa.security.JwtTokenProvider;
+import dhbw.leftlovers.service.uaa.security.JWTTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Autowired
-    private JwtTokenProvider jwtTokenProvider;
+    private JWTTokenProvider JWTTokenProvider;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
     public String login(String username, String password) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-            return jwtTokenProvider.createToken(username);
+            return JWTTokenProvider.createToken(username);
         } catch (AuthenticationException e) {
             throw new LoginException();
         }
@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserService {
         this.checkIfEmailIsPresent(user.getEmail());
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         this.save(user);
-        return jwtTokenProvider.createToken(user.getUsername());
+        return JWTTokenProvider.createToken(user.getUsername());
     }
 
     @Override
@@ -72,18 +72,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User whoami(HttpServletRequest req) {
-        return userRepository.findByUsername(jwtTokenProvider.getUsername(jwtTokenProvider.resolveToken(req))).orElseThrow(JWTValidationException::new);
+    public User getUserFromJWT(HttpServletRequest req) {
+        return userRepository.findByUsername(JWTTokenProvider.getUsername(JWTTokenProvider.resolveToken(req))).orElseThrow(JWTValidationException::new);
     }
 
     @Override
     public boolean validateToken(HttpServletRequest req) {
-        return jwtTokenProvider.validateToken(req);
-    }
-
-    @Override
-    public String getIdFromJWT(String token) {
-        return jwtTokenProvider.getId(token);
+        return JWTTokenProvider.validateToken(req);
     }
 
     private void checkIfUsernameIsPresent(String username) {

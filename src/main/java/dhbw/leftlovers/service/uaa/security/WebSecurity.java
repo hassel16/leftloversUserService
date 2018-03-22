@@ -20,7 +20,7 @@ import static dhbw.leftlovers.service.uaa.security.SecurityConstants.*;
 public class WebSecurity extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private JwtTokenProvider jwtTokenProvider;
+    private JWTTokenProvider JWTTokenProvider;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -32,7 +32,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers(WAKE_UP_URL).permitAll()
                 .anyRequest().authenticated();
 
-        http.apply(new JwtTokenFilterConfigurer(jwtTokenProvider));
+        http.apply(new JWTTokenFilterConfigurer(JWTTokenProvider));
 
         // this disables session creation on Spring Security
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

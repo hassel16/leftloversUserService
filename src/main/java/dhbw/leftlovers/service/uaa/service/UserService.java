@@ -19,9 +19,7 @@ public interface UserService {
 
     void delete(String username);
 
-    User whoami(HttpServletRequest req);
+    User getUserFromJWT(HttpServletRequest req);
 
     boolean validateToken(HttpServletRequest req);
-
-    String getIdFromJWT(String token);
 }

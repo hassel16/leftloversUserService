@@ -18,7 +18,7 @@ import static dhbw.leftlovers.service.uaa.security.SecurityConstants.EXPIRATION_
 import static dhbw.leftlovers.service.uaa.security.SecurityConstants.SECRET;
 
 @Component
-public class JwtTokenProvider {
+public class JWTTokenProvider {
 
     @Autowired
     private UserDetailsServiceImpl userDetailsService;

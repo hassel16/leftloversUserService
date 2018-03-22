@@ -1,5 +1,6 @@
 package dhbw.leftlovers.service.uaa.controller;
 
+import dhbw.leftlovers.service.uaa.entity.JWTValidationResponse;
 import dhbw.leftlovers.service.uaa.entity.TokenResponse;
 import dhbw.leftlovers.service.uaa.entity.User;
 import dhbw.leftlovers.service.uaa.entity.UserResponse;
@@ -10,8 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-
-import static dhbw.leftlovers.service.uaa.security.SecurityConstants.*;
 
 @CrossOrigin
 @RestController
@@ -62,18 +61,18 @@ public class UserController {
     */
 
     @DeleteMapping("/{username}")
-    ResponseEntity<?> delete(@PathVariable String username) {
+    ResponseEntity<?> deleteUser(@PathVariable String username) {
         userService.delete(username);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/validate")
-    boolean validateToken(HttpServletRequest req) {
-        return userService.validateToken(req);
+    JWTValidationResponse validateToken(HttpServletRequest req) {
+        return new JWTValidationResponse(userService.validateToken(req));
     }
 
-    @GetMapping("/me")
-    UserResponse whoami(HttpServletRequest req) {
-        return modelMapper.map(userService.whoami(req), UserResponse.class);
+    @GetMapping("/resolve")
+    UserResponse resolveToken(HttpServletRequest req) {
+        return modelMapper.map(userService.getUserFromJWT(req), UserResponse.class);
     }
 }

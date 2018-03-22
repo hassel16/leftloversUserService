@@ -11,21 +11,21 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-public class JwtTokenFilter extends GenericFilterBean {
+public class JWTTokenFilter extends GenericFilterBean {
 
-    private JwtTokenProvider jwtTokenProvider;
+    private JWTTokenProvider JWTTokenProvider;
 
-    public JwtTokenFilter(JwtTokenProvider jwtTokenProvider) {
-        this.jwtTokenProvider = jwtTokenProvider;
+    public JWTTokenFilter(JWTTokenProvider JWTTokenProvider) {
+        this.JWTTokenProvider = JWTTokenProvider;
     }
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain filterChain)
             throws IOException, ServletException {
 
-        String token = jwtTokenProvider.resolveToken((HttpServletRequest) req);
-        if (token != null && jwtTokenProvider.validateToken(token)) {
-            Authentication auth = token != null ? jwtTokenProvider.getAuthentication(token) : null;
+        String token = JWTTokenProvider.resolveToken((HttpServletRequest) req);
+        if (token != null && JWTTokenProvider.validateToken(token)) {
+            Authentication auth = token != null ? JWTTokenProvider.getAuthentication(token) : null;
             SecurityContextHolder.getContext().setAuthentication(auth);
         }
         filterChain.doFilter(req, res);
