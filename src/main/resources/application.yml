@@ -13,5 +13,5 @@ server:
   context-path: /UAAService
 endpoints:
   cors:
-    allowed-origins: *
-    allowed-methods: *
+    allowed-origins: "*"
+    allowed-methods: "*"
