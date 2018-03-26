@@ -13,14 +13,19 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 
-import static dhbw.leftlovers.service.uaa.security.SecurityConstants.*;
+import static dhbw.leftlovers.service.uaa.security.SecurityConstants.LOG_IN_URL;
+import static dhbw.leftlovers.service.uaa.security.SecurityConstants.SIGN_UP_URL;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurity extends WebSecurityConfigurerAdapter {
 
+    private final JWTTokenProvider JWTTokenProvider;
+
     @Autowired
-    private JWTTokenProvider JWTTokenProvider;
+    public WebSecurity(JWTTokenProvider JWTTokenProvider) {
+        this.JWTTokenProvider = JWTTokenProvider;
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

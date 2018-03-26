@@ -8,9 +8,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-public class ServiceRegistration {
+class ServiceRegistration {
 
-    private Service ownService;
+    private final Service ownService;
 
     ServiceRegistration(String serviceName, String serviceAddress, int servicePort) {
         this.ownService = new Service(serviceName, serviceAddress, servicePort);

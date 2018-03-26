@@ -20,8 +20,12 @@ import static dhbw.leftlovers.service.uaa.security.SecurityConstants.SECRET;
 @Component
 public class JWTTokenProvider {
 
+    private final UserDetailsServiceImpl userDetailsService;
+
     @Autowired
-    private UserDetailsServiceImpl userDetailsService;
+    public JWTTokenProvider(UserDetailsServiceImpl userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
 
     public String createToken(String username) {
 
@@ -46,15 +50,6 @@ public class JWTTokenProvider {
                 .parseClaimsJws(token)
                 .getBody()
                 .getSubject();
-    }
-
-
-    public String getId(String token) {
-        return Jwts.parser()
-                .setSigningKey(SECRET.getBytes())
-                .parseClaimsJws(token)
-                .getBody()
-                .getId();
     }
 
     public String resolveToken(HttpServletRequest req) {
