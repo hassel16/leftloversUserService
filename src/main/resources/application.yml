@@ -11,3 +11,7 @@ spring:
    ddl-auto: validate
 server:
   context-path: /UAAService
+endpoints:
+  cors:
+    allowed-origins: *
+    allowed-methods: *
