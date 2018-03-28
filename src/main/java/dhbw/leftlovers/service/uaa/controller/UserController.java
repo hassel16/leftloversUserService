@@ -1,9 +1,6 @@
 package dhbw.leftlovers.service.uaa.controller;
 
-import dhbw.leftlovers.service.uaa.entity.JWTValidationResponse;
-import dhbw.leftlovers.service.uaa.entity.TokenResponse;
-import dhbw.leftlovers.service.uaa.entity.User;
-import dhbw.leftlovers.service.uaa.entity.UserResponse;
+import dhbw.leftlovers.service.uaa.entity.*;
 import dhbw.leftlovers.service.uaa.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,8 +45,8 @@ public class UserController {
     // JWT in body
 
     @PostMapping("/login")
-    TokenResponse login(@RequestParam String username, @RequestParam String password) {
-        return new TokenResponse(userService.login(username, password));
+    TokenResponse login(@RequestBody LoginUser loginUser) {
+        return new TokenResponse(userService.login(loginUser.getUsername(), loginUser.getPassword()));
     }
 
     /*
