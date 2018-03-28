@@ -8,5 +8,5 @@ public class UserResponse {
     private long userid;
     private String username;
     private String email;
-    private Location location;
+    private Location city;
 }
