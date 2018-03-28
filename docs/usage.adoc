@@ -7,9 +7,9 @@
     "location":{
                 "city":
                 {
-                   "name":"Karlsruhe",
-                   "latitude":48.9935599,
-                   "longitude":8.401863999999932
+                   "long_name":"Karlsruhe",
+                   "lat":48.9935599,
+                   "lng":8.401863999999932
                 },
                 "email":"max@example.com",
                 "username":"max",
