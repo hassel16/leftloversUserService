@@ -18,7 +18,7 @@ public class User implements Serializable {
     private String password;
     private String email;
 
-    @OneToOne
+    @OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "tbl_standort_standortid",nullable = false)
     private Location location;
 }

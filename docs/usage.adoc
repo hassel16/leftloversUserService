@@ -2,17 +2,26 @@
 
 ==== How do I sign up?
 
-  curl -i -H "Content-Type: application/json" -X POST -d '{
-      "username": "admin",
-      "password": "password",
-      "email": "admin@example.com"
+  curl -i -H "Content-Type: application/json" -X POST -d '
+  {
+    "location":{
+                "city":
+                {
+                   "name":"Karlsruhe",
+                   "latitude":48.9935599,
+                   "longitude":8.401863999999932
+                },
+                "email":"max@example.com",
+                "username":"max",
+                "password":"password"
   }' http://localhost:8080/UAAService/signup
 
 You will receive a JWT as output.
 
 ==== How do I log in?
 
-  curl -i -H "Content-Type: application/json" -X POST -d '{
+  curl -i -H "Content-Type: application/json" -X POST -d '
+  {
       "username": "max",
       "password": "password"
   }' http://localhost:8080/UAAService/login

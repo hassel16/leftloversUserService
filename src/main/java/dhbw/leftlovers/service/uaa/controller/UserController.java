@@ -48,8 +48,8 @@ public class UserController {
     // JWT in body
 
     @PostMapping("/login")
-    TokenResponse login(@RequestBody User user) {
-        return new TokenResponse(userService.login(user.getUsername(), user.getPassword()));
+    TokenResponse login(@RequestParam String username, @RequestParam String password) {
+        return new TokenResponse(userService.login(username, password));
     }
 
     /*
@@ -57,8 +57,8 @@ public class UserController {
     // JWT in header
 
     @PostMapping("/login")
-    ResponseEntity<?> login(@RequestBody User user) {
-        String bearerToken = userService.login(user.getUsername(), user.getPassword());
+    ResponseEntity<?> login(@RequestParam String username, @RequestParam String password) {
+        String bearerToken = userService.login(username, password);
         return ResponseEntity.ok().header(HEADER_STRING, TOKEN_PREFIX + bearerToken).build();
     }
 
