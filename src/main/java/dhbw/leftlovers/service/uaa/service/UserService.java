@@ -11,13 +11,15 @@ public interface UserService {
 
     Optional<User> findByEmail(String email);
 
-    User save(User user);
+    void save(User user);
 
     String login(String username, String password);
 
     String signup(User user);
 
     void delete(String username);
+
+    void update(String username, User user);
 
     User getUserFromJWT(HttpServletRequest req);
 

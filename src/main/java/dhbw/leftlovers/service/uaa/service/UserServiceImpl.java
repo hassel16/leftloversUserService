@@ -11,8 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
@@ -47,8 +50,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User save(User user) {
-        return userRepository.save(user);
+    @Transactional
+    public void save(User user) {
+        userRepository.save(user);
     }
 
     @Override
@@ -71,8 +75,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void delete(String username) {
         userRepository.deleteByUsername(username);
+    }
+
+    @Override
+    @Transactional
+    public void update(String username, User input) {
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(username));
+        user.setEmail(input.getEmail());
+        user.setPassword(bCryptPasswordEncoder.encode(input.getPassword()));
     }
 
     @Override

@@ -70,6 +70,12 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
+    @PutMapping("/{username}")
+    ResponseEntity<?> editUser(@PathVariable String username, @RequestBody User input) {
+        userService.update(username, input);
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping("/validate")
     JWTValidationResponse validateToken(HttpServletRequest req) {
         return new JWTValidationResponse(userService.validateToken(req));

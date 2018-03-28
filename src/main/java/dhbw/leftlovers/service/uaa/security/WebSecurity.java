@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -44,11 +45,12 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(org.springframework.security.config.annotation.web.builders.WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/v2/api-docs")//
-                .antMatchers("/swagger-resources/**")//
-                .antMatchers("/swagger-ui.html")//
-                .antMatchers("/configuration/**")//
-                .antMatchers("/webjars/**")//
+        web.ignoring()
+                .antMatchers("/v2/api-docs")
+                .antMatchers("/swagger-resources/**")
+                .antMatchers("/swagger-ui.html")
+                .antMatchers("/configuration/**")
+                .antMatchers("/webjars/**")
                 .antMatchers("/public")
                 .antMatchers("/health");
     }
@@ -58,7 +60,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         CorsConfiguration configuration = new CorsConfiguration();
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         configuration.setAllowedOrigins(Arrays.asList("*"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST"));
+        configuration.setAllowedMethods(Arrays.asList("*"));
         configuration.setAllowedHeaders(Arrays.asList("authorization", "content-type", "x-auth-token"));
         configuration.setExposedHeaders(Arrays.asList("content-type"));
         source.registerCorsConfiguration("/**", configuration);

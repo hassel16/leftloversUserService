@@ -1,7 +1,3 @@
-endpoints:
-  cors:
-    allowed-origins: "*"
-    allowed-methods: "*"
 security:
  token:
   secret: T6JY9jwA8sXJUJ8e
@@ -15,3 +11,7 @@ spring:
    ddl-auto: validate
 server:
   context-path: /UAAService
+endpoints:
+  cors:
+    allowed-origins: "*"
+    allowed-methods: "*"
