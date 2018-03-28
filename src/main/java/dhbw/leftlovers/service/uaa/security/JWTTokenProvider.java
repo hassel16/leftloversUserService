@@ -62,7 +62,9 @@ public class JWTTokenProvider {
 
     public boolean validateToken(String token) {
         try {
-            Jwts.parser().setSigningKey(SECRET.getBytes()).parseClaimsJws(token);
+            Jwts.parser()
+                    .setSigningKey(SECRET.getBytes())
+                    .parseClaimsJws(token);
             return true;
         } catch (JwtException | IllegalArgumentException e) {
             throw new JWTValidationException();
@@ -72,7 +74,9 @@ public class JWTTokenProvider {
     public boolean validateToken(HttpServletRequest req) {
         String bearerToken = resolveToken(req);
         try {
-            Jwts.parser().setSigningKey(SECRET.getBytes()).parseClaimsJws(bearerToken);
+            Jwts.parser()
+                    .setSigningKey(SECRET.getBytes())
+                    .parseClaimsJws(bearerToken);
             return true;
         } catch (JwtException | IllegalArgumentException e) {
             throw new JWTValidationException();

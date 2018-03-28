@@ -1,6 +1,5 @@
 package dhbw.leftlovers.service.uaa.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -17,13 +16,18 @@ public class Location implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long standortid;
 
-    private String name;
-    private Double latitude;
-    private Double longitude;
+    @Column(name = "name")
+    private String long_name;
 
-    public Location(String name, Double longitude, Double latitude) {
-        this.name = name;
-        this.longitude = longitude;
-        this.latitude = latitude;
+    @Column(name = "latitude")
+    private Double lat;
+
+    @Column(name = "longitude")
+    private Double lng;
+
+    public Location(String long_name, Double lng, Double lat) {
+        this.long_name = long_name;
+        this.lng = lng;
+        this.lat = lat;
     }
 }
