@@ -33,7 +33,7 @@ You will receive a JWT as output.
       "username": "admin",
       "password": "password",
       "email": "namid@example.com"
-  }' http://localhost:8080/UAAService/admin
+  }' http://localhost:8080/UAAService/{username}
 
 ==== How do I delete a user?
 
