@@ -12,13 +12,13 @@ public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long userid;
+    private Long userid;
 
     private String username;
-
     private String password;
-
     private String email;
 
-    // TODO: City + Country?
+    @OneToOne
+    @JoinColumn(name = "tbl_standort_standortid",nullable = false)
+    private Location location;
 }
