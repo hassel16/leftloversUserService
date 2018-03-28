@@ -6,10 +6,7 @@ import lombok.Data;
 public class UserResponse {
 
     private long userid;
-
     private String username;
-
     private String email;
-
-    // TODO: City + Country?
+    private Location location;
 }
