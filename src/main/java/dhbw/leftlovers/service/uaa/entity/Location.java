@@ -19,15 +19,19 @@ public class Location implements Serializable {
     @Column(name = "name")
     private String long_name;
 
+    @Column(name = "name_details")
+    private String name_details;
+
     @Column(name = "latitude")
     private Double lat;
 
     @Column(name = "longitude")
     private Double lng;
 
-    public Location(String long_name, Double lng, Double lat) {
+    public Location(String long_name, String name_details, Double lat, Double lng) {
         this.long_name = long_name;
-        this.lng = lng;
+        this.name_details = name_details;
         this.lat = lat;
+        this.lng = lng;
     }
 }
