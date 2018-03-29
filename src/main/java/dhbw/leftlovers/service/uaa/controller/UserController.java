@@ -15,12 +15,12 @@ public class UserController {
 
     private final UserService userService;
 
-    @Autowired
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, ModelMapper modelMapper) {
         this.userService = userService;
+        this.modelMapper = modelMapper;
     }
 
     // JWT in body

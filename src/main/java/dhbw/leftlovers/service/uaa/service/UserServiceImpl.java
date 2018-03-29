@@ -5,6 +5,7 @@ import dhbw.leftlovers.service.uaa.exception.EmailTakenException;
 import dhbw.leftlovers.service.uaa.exception.JWTValidationException;
 import dhbw.leftlovers.service.uaa.exception.LoginException;
 import dhbw.leftlovers.service.uaa.exception.UsernameTakenException;
+import dhbw.leftlovers.service.uaa.repository.LocationRepository;
 import dhbw.leftlovers.service.uaa.repository.UserRepository;
 import dhbw.leftlovers.service.uaa.security.JWTTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,8 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserService {
 
+    private final LocationRepository locationRepository;
+
     private final UserRepository userRepository;
 
     private final JWTTokenProvider JWTTokenProvider;
@@ -31,7 +34,8 @@ public class UserServiceImpl implements UserService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, JWTTokenProvider JWTTokenProvider, AuthenticationManager authenticationManager, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UserServiceImpl(LocationRepository locationRepository, UserRepository userRepository, dhbw.leftlovers.service.uaa.security.JWTTokenProvider JWTTokenProvider, AuthenticationManager authenticationManager, BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.locationRepository = locationRepository;
         this.userRepository = userRepository;
         this.JWTTokenProvider = JWTTokenProvider;
         this.authenticationManager = authenticationManager;
@@ -69,6 +73,8 @@ public class UserServiceImpl implements UserService {
         this.checkIfUsernameIsPresent(user.getUsername());
         this.checkIfEmailIsPresent(user.getEmail());
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        locationRepository.findByLatAndLng(user.getCity().getLat(), user.getCity().getLng())
+                .ifPresent(location -> user.setCity(location));
         this.save(user);
         return JWTTokenProvider.createToken(user.getUsername());
     }
